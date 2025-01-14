@@ -1,24 +1,33 @@
-import logo from './logo.svg';
+import react,{useState} from 'react';
 import './App.css';
+import ErrorBoundary from './ErrorBoundary';
+import Home from './Pages/Home/Home';
+import Login from './Pages/Login';
+import { Routes, BrowserRouter, Route,Navigate } from "react-router-dom";
+import Layout from './Pages/Layout';
+import Dashboard from './Pages/Dashboard/Dashboard';
 
 function App() {
+
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("isLoggedIn") === "true");
+
+  const PrivateRoute = ({ element, isAuthenticated }) => {
+    return isAuthenticated ? element : <Navigate to="/login" />;
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ErrorBoundary>
+      <Layout>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" exact element={<Home />}></Route>
+            <Route path="/login" element={<Login />}></Route>
+            <Route path="/dashboard" element={<PrivateRoute element={<Dashboard />} isAuthenticated={isLoggedIn} />}></Route>
+            <Route path="*" element={<Home />}></Route>
+          </Routes>
+        </BrowserRouter>
+      </Layout>
+    </ErrorBoundary>
   );
 }
 
