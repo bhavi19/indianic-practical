@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 const Dashboard = () => {
     const data = [
-        { name: "John Doe", dob: "1990-05-15", email: "johndoe@example.com", role: "Admin", gender: "Male" },
+        { name: "John Doe", dob: "1990-05-15", email: "johndoe@example1.com", role: "Admin", gender: "Male" },
         { name: "Alice Smith", dob: "1985-11-22", email: "alicesmith@example.com", role: "Editor", gender: "Male" },
         { name: "Bob Johnson", dob: "1992-08-30", email: "bobjohnson@example.com", role: "Viewer", gender: "Male" },
         { name: "Charlie Brown", dob: "1994-02-10", email: "charliebrown@example.com", role: "Admin", gender: "Female" },
@@ -15,7 +15,7 @@ const Dashboard = () => {
     };
 
     const filteredTableData = data.filter((item) =>
-        item.name.toLowerCase().includes(searchValue.toLowerCase())
+        item.name.toLowerCase().includes(searchValue.toLowerCase()) || item.email.toLowerCase().includes(searchValue.toLowerCase())
     );
 
     return (
